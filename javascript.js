@@ -1,20 +1,35 @@
+// create DOM for announcement of results
+
+const container = document.querySelector('body');
+
+const resultsAnnounce = document.createElement('div')
+resultsAnnounce.classList.add("announcement");
+
+// create DOM for restart button
+const restartContainer = document.querySelector('.restartcontainer');
+const restartButton = document.createElement('button');
+restartButton.classList.add("restart");
+restartButton.textContent="Play again";
+
+// initialise game
+
 let playerWinCount = 0, computerWinCount = 0 , roundNumber=1;
 
 let game = (playerSelection) => {
-    /*let i;
-    //play till one person reaches score of 5
-    for (i=1; ; i++) {
-        if (playerWinCount==5 || computerWinCount==5){
-            break;
-        }
-        playRound(playerSelection, i);
-    }*/
 
     if (playerWinCount==5){
-        console.log("Final Score - Player: %i. Computer: %i. Player wins!", playerWinCount, computerWinCount);
+        resultsAnnounce.textContent="Player wins!";
+        let finalScore = "Rounds won by Player:" + playerWinCount+ " Rounds won by Computer:" + computerWinCount;
+        console.log(finalScore);
+        container.appendChild(resultsAnnounce);
+        container.appendChild(restartButton);
     }
     else if (computerWinCount==5) {
-        console.log("Final Score - Player: %i. Computer: %i. Computer wins!", playerWinCount, computerWinCount);       
+        resultsAnnounce.textContent= "Computer wins!";
+        let finalScore = "Rounds won by Player:" + playerWinCount+ " Rounds won by Computer:" + computerWinCount;
+        console.log(finalScore);
+        container.appendChild(resultsAnnounce);    
+        container.appendChild(restartButton);         
     }
 
     else{
@@ -92,4 +107,10 @@ for (const selection of selections) {
         game(playerInput);
     });
   }
+
+
+
+;
+
+
 

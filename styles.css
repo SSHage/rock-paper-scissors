@@ -1,4 +1,30 @@
+.headercontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+}
+
+.header {
+    border: 2px solid black;
+    font-family: fantasy;
+    font-size: 50px;
+}
+
 button {
-    background-color: black;
+    margin:auto;
     background-size:cover;
+    display: inline;
+    justify-content: center;
+}
+
+.announcement {
+    text-align: center;
+    font-family: fantasy;
+    font-size: 40px;
+}
+
+.restart {
+    font-family: cursive;
+    font-size: 30px;
 }
