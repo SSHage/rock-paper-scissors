@@ -2,14 +2,22 @@
 
 const container = document.querySelector('body');
 
-const resultsAnnounce = document.createElement('div')
-resultsAnnounce.classList.add("announcement");
+const winnerAnnounce = document.createElement('div')
+winnerAnnounce.classList.add("announcement");
+
+const resultsAnnounce = document.createElement('div');
+resultsAnnounce.classList.add("announcement", "resultsannounce");
+
+const scoreAnnounce = document.createElement('div');
+scoreAnnounce.classList.add("announcement");
+
+//variable to disable clicks after game has concluded
+const gamebuttons=document.querySelectorAll('button');
 
 // create DOM for restart button
-const restartContainer = document.querySelector('.restartcontainer');
+const restartArea = document.createElement('div');
+restartArea.classList.add("restartarea");
 const restartButton = document.createElement('button');
-restartButton.classList.add("restart");
-restartButton.textContent="Play again";
 
 // initialise game
 
@@ -17,25 +25,34 @@ let playerWinCount = 0, computerWinCount = 0 , roundNumber=1;
 
 let game = (playerSelection) => {
 
+    playRound(playerSelection,roundNumber);
+    scoreAnnounce.textContent = "Player:" + playerWinCount+ " Computer:" + computerWinCount;
+    container.appendChild(scoreAnnounce);
+    roundNumber++;
+
     if (playerWinCount==5){
-        resultsAnnounce.textContent="Player wins!";
-        let finalScore = "Rounds won by Player:" + playerWinCount+ " Rounds won by Computer:" + computerWinCount;
-        console.log(finalScore);
-        container.appendChild(resultsAnnounce);
-        container.appendChild(restartButton);
+        resultsAnnounce.remove();
+        scoreAnnounce.remove();
+        winnerAnnounce.textContent="Player is Victorious!";
+        container.appendChild(winnerAnnounce);
+        scoreAnnounce.textContent = "Player:" + playerWinCount+ " Computer:" + computerWinCount;
+        container.appendChild(scoreAnnounce);
+        restartPopup();
+        gamebuttons.disabled=true;
+        console.log(gamebuttons);
     }
     else if (computerWinCount==5) {
-        resultsAnnounce.textContent= "Computer wins!";
-        let finalScore = "Rounds won by Player:" + playerWinCount+ " Rounds won by Computer:" + computerWinCount;
-        console.log(finalScore);
-        container.appendChild(resultsAnnounce);    
-        container.appendChild(restartButton);         
+        resultsAnnounce.remove();
+        scoreAnnounce.remove();
+        winnerAnnounce.textContent= "Computer is Victorious!";
+        container.appendChild(winnerAnnounce);    
+        scoreAnnounce.textContent = "Player:" + playerWinCount+ " Computer:" + computerWinCount;
+        container.appendChild(scoreAnnounce);
+        gamebuttons.disabled=true;
+        console.log(gamebuttons);
+        restartPopup();
     }
 
-    else{
-        playRound(playerSelection,roundNumber);
-        roundNumber++;
-    }
 }
 
 let playRound = (playerSelection, roundNumber) => {
@@ -49,53 +66,80 @@ let playRound = (playerSelection, roundNumber) => {
     "Rock" : randomNumber ==2 ? 
     "Paper" : "Scissors";
 
-    // get player input //
-    //playerSelection = prompt("Enter your selection. (Rock/Paper/Scissors)");
     playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase();
 
     if (computerSelection=="Rock"){
         if (playerSelection=="Paper"){
-            playerWinCount++;
-            console.log("Round %i - You win! %s beats %s.", roundNumber, playerSelection, computerSelection);
+            roundPlayerWin();
+            console.log("Round %i - Player wins!", roundNumber);
         }
         else if (playerSelection=="Scissors"){
-            computerWinCount++;
-            console.log("Round %i - You lose! %s loses to %s.", roundNumber, playerSelection, computerSelection);
+            roundCompWin();
+            console.log("Round %i - Computer wins!", roundNumber);
         }
         else {
+            roundDraw();
             console.log("Round %i - It's a draw!", roundNumber);
         }
     } 
 
     else if (computerSelection=="Paper"){
         if (playerSelection=="Scissors"){
-            playerWinCount++;
-            console.log("Round %i - You win! %s beats %s.", roundNumber, playerSelection, computerSelection);
+            roundPlayerWin();
+            console.log("Round %i - Player wins!", roundNumber);
         }
         else if (playerSelection=="Rock"){
-            computerWinCount++;
-            console.log("Round %i - You lose! %s loses to %s.", roundNumber, playerSelection, computerSelection);
+            roundCompWin();
+            console.log("Round %i - Computer wins!", roundNumber);
         }
         else {
+            roundDraw();
             console.log("Round %i - It's a draw!", roundNumber);
         }
     }
 
     else if (computerSelection=="Scissors"){
         if (playerSelection=="Rock"){
-            playerWinCount++;
-            console.log("Round %i - You win! %s beats %s.", roundNumber, playerSelection, computerSelection);
+            roundPlayerWin();
+            console.log("Round %i - Player wins!", roundNumber);
         }
         else if (playerSelection=="Paper"){
-            computerWinCount++;
-            console.log("Round %i - You lose! %s loses to %s.", roundNumber, playerSelection, computerSelection);
+            roundCompWin();
+            console.log("Round %i - Computer wins!", roundNumber);
         }
         else {
+            roundDraw();
             console.log("Round %i - It's a draw!", roundNumber);
         }
     }
 }
 
+// function for creating restart button
+let restartPopup = () => {
+    restartArea.appendChild(restartButton);
+    restartButton.classList.add("restart");
+    restartButton.textContent="Play again";
+    container.appendChild(restartArea);
+}
+
+// dialogue functions for round results
+
+let roundPlayerWin = () => {
+    ++playerWinCount;
+    resultsAnnounce.textContent = "Round " + roundNumber+ "- Player wins!";
+    container.appendChild(resultsAnnounce);
+}
+
+let roundCompWin = () => {
+    ++computerWinCount;
+    resultsAnnounce.textContent = "Round " + roundNumber+ "- Computer wins!";
+    container.appendChild(resultsAnnounce);
+}
+
+let roundDraw = () => {
+    resultsAnnounce.textContent = "Round  " + roundNumber+ "- Draw!";
+    container.appendChild(resultsAnnounce);
+}
 // initialise variables
 const selections = document.querySelectorAll('.selection');
 let playerInput;
@@ -104,13 +148,25 @@ let playerInput;
 for (const selection of selections) {
     selection.addEventListener('click', function(e){
         playerInput = this.getAttribute('id');
+        this.classList.add('playing');
         game(playerInput);
     });
+
+    selection.addEventListener('transitionend', function(e){
+        this.classList.remove('playing');
+    }
+    )
   }
 
+  // Add functionality to restart button
 
-
-;
-
-
-
+restartButton.addEventListener('click', function(e){
+    playerWinCount=0; 
+    computerWinCount=0;
+    roundNumber=1;
+    winnerAnnounce.remove();
+    resultsAnnounce.remove();
+    scoreAnnounce.remove();
+    restartButton.remove();
+    //gamebuttons.disabled=false;
+})

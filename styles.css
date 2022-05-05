@@ -1,3 +1,5 @@
+/* header properties */
+
 .headercontainer {
     display: flex;
     flex-direction: row;
@@ -11,17 +13,38 @@
     font-size: 50px;
 }
 
+/* button properties */
+.buttoncontainer {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0px auto;
+    display: flex;
+}
+
 button {
     margin:auto;
     background-size:cover;
     display: inline;
-    justify-content: center;
+    justify-content: space-around; 
+    transition: all 0.05s ease;
 }
 
+.playing {
+    transform: scale(0.95);
+}
+
+/* announcement properties */
 .announcement {
     text-align: center;
     font-family: fantasy;
     font-size: 40px;
+}
+
+
+/* restart button properties */
+.restartarea {
+    display: flex;
+    justify-content: center;
 }
 
 .restart {
