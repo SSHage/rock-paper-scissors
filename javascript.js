@@ -11,9 +11,6 @@ resultsAnnounce.classList.add("announcement", "resultsannounce");
 const scoreAnnounce = document.createElement('div');
 scoreAnnounce.classList.add("announcement");
 
-//variable to disable clicks after game has concluded
-const gamebuttons=document.querySelectorAll('button');
-
 // create DOM for restart button
 const restartArea = document.createElement('div');
 restartArea.classList.add("restartarea");
@@ -37,9 +34,8 @@ let game = (playerSelection) => {
         container.appendChild(winnerAnnounce);
         scoreAnnounce.textContent = "Player:" + playerWinCount+ " Computer:" + computerWinCount;
         container.appendChild(scoreAnnounce);
+        clickDisable();
         restartPopup();
-        gamebuttons.disabled=true;
-        console.log(gamebuttons);
     }
     else if (computerWinCount==5) {
         resultsAnnounce.remove();
@@ -48,8 +44,7 @@ let game = (playerSelection) => {
         container.appendChild(winnerAnnounce);    
         scoreAnnounce.textContent = "Player:" + playerWinCount+ " Computer:" + computerWinCount;
         container.appendChild(scoreAnnounce);
-        gamebuttons.disabled=true;
-        console.log(gamebuttons);
+        clickDisable();
         restartPopup();
     }
 
@@ -114,6 +109,22 @@ let playRound = (playerSelection, roundNumber) => {
     }
 }
 
+// function to disable and reenable click;
+let clickDisable = () =>{
+    document.querySelectorAll('.selection').forEach(elem => {
+        elem.disabled=true;
+    });
+}
+
+let clickEnable = () =>{
+    document.querySelectorAll('.selection').forEach(elem => {
+        elem.disabled=false;
+    });
+}
+
+
+
+
 // function for creating restart button
 let restartPopup = () => {
     restartArea.appendChild(restartButton);
@@ -168,5 +179,7 @@ restartButton.addEventListener('click', function(e){
     resultsAnnounce.remove();
     scoreAnnounce.remove();
     restartButton.remove();
-    //gamebuttons.disabled=false;
+    clickEnable();
 })
+
+
