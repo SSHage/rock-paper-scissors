@@ -1,3 +1,7 @@
+body {
+    background-color: rgb(115, 112, 112);
+}
+
 /* header properties */
 
 .headercontainer {
@@ -11,6 +15,7 @@
     border: 2px solid black;
     font-family: fantasy;
     font-size: 50px;
+    background-color: white;
 }
 
 /* button properties */
@@ -50,7 +55,7 @@ button {
 
 .restart {
     font-family: cursive;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 /* responsive interface */
@@ -62,11 +67,11 @@ button {
     }
 
     .header {
-        font-size: 30px;
+        font-size: 25px;
     }
 
     .announcement {
-        font-size: 30px;
+        font-size: 25px;
     }
     .restart {
         font-size:15px;
