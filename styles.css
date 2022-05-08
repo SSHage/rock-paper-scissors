@@ -29,20 +29,6 @@ button {
     transition: all 0.05s ease;
 }
 
-/* responsive interface */
-@media (max-width: 950px){
-    img {
-        width: 100%;
-        max-width: 300px;
-        height:auto;
-    }
-
-    .header {
-        font-size: calc(1rem+1vw);
-    }
-
-}
-
 /* animation for button */
 .playing {
     transform: scale(0.95);
@@ -65,4 +51,25 @@ button {
 .restart {
     font-family: cursive;
     font-size: 30px;
+}
+
+/* responsive interface */
+@media (max-width: 950px){
+    img {
+        width: 100%;
+        max-width: 300px;
+        height:auto;
+    }
+
+    .header {
+        font-size: 30px;
+    }
+
+    .announcement {
+        font-size: 30px;
+    }
+    .restart {
+        font-size:15px;
+    }
+
 }

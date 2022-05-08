@@ -14,6 +14,7 @@ Completed: Added function to disable buttons after winner has been found.
 Learning: To disable multiple buttons, querySelectorAll has to be used together with forEach function.
 
 8/5/22:
-Completed: Added responsive image functionality.
+Completed: Added responsive text and image functionality.
+To learn: Learn how to make fluid text as the responsive method.
 
 
